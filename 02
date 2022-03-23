@@ -4,13 +4,13 @@
 
 int main()
 {
-	char a[1000],b[1000];
-	int c,d,e,f=0,g,h=0;
-	printf("输入你需要查询的句子。    \n请输入：\n");
+	char a[10000],b[10000];
+	int c,d,e,f=0,g,n=0;
+	printf("输入你查询的句子。    \n请输入：\n");
 	c=strlen(a);
 	gets(a);
 	strlwr(a);
-    printf("\n输入你需要查询的单词。   \n请输入：\n");
+    printf("\n输入你查询的单词。   \n请输入：\n");
 	
 	
 	gets(b);
@@ -25,7 +25,7 @@ int main()
 			{
 				if(g+1==d)
 				{
-					 h++;
+					 n++;
 				}
 				continue;
 			}
@@ -33,6 +33,4 @@ int main()
 		}
 	}
 	
-	printf("\n句子里有：%d个%s\n",h,b);
-
-}
+	printf("\n句子里有：%d个%s\n",n,b);
