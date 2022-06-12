@@ -1,0 +1,251 @@
+#include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
+
+struct user
+{
+	int zh;
+	char yhname[100];
+	int mima;
+	long yue;
+	long zt;
+};
+
+void kaihu(user yh[] );
+void cunkuan(user yh[]);
+void qukuan(user yh[]);
+void chaxun(user yh[]);
+void zhuanzhang(user yh[]);
+void guashi(user yh[]);
+void jiegua(user yh[]);
+void xiaohu(user yh[]);
+void gaimi(user yh[]);
+
+void menu()
+{
+	printf("          欢迎使用银行管理系统ATM\n");
+	printf("====================================================\n");
+	printf("    请选择您的操作:\n");
+	printf("       1.开户  2.存款  3.取款  4.查询  5.转账\n");
+	printf("       6.挂失  7.解挂  8.销户  9.改密  10.退出系统\n");
+	printf("====================================================\n");
+}
+
+void kaihu(user yh[] )
+{
+	int x=0,j,k;
+	
+	for(j=0;j<1000;j++)
+	{
+		if(strlen(yh[j].yhname)>=100)
+			break;
+		x++;
+	} 
+	yh[j].zh=x;
+	printf("账户:%d\n",yh[j].zh);
+	printf("用户名:");
+	getchar();
+	gets(yh[j].yhname);
+	printf("输入6位数密码:");
+	scanf("%d",&k);
+	if(k>999999||k<99999)
+	{
+		printf("密码输入错误\n");
+		printf("请重新输入\n");
+		scanf("%d",&k);
+	}
+	yh[j].mima=k;
+	printf("成功开户\n");
+	yh[j].yue=0;
+	yh[j].zt=0;
+	yh[j].zh=x;
+}
+
+void cunkuan(user yh[])
+{
+	int a,c,e,b;
+	long y;
+	printf("请输入账户:");
+	scanf("%d",&c);
+	for(a=0;a<1001;a++)
+	{
+		if(yh[a].zh==c)
+		{     
+			break;
+		}
+	}
+	if(a==1001||a<0)
+	{
+		printf("对不起,无此账号!\n");
+		return;
+	}
+	printf("请输入密码:\n");
+	scanf("%d",&e);
+	do{
+		if(e==yh[a].mima)
+		{
+			printf("用户名为:%s  余额为%ld\n",yh[a].yhname,yh[a].yue);
+			printf("输入存款额度:\n");
+			scanf("%ld",&y);
+			yh[a].yue=y+yh[a].yue;
+			printf("存款成功,余额为%ld",yh[a].yue);
+			return;
+		}
+		else
+		{ 
+			printf("输入错误,重新输入\n");
+			scanf("%d",&e);
+		}
+	}while(1);
+	FILE *q;
+    q=fopen("D:\\ATM.txt","w");
+	for(b=0;b<100;b++){
+		fwrite(&yh[b],sizeof(struct user),1,q);}
+	fclose(q);
+}
+
+void qukuan(user yh[])
+{     
+	int a,c,e;
+	long y,z;
+	printf("请输入账户:");
+	scanf("%d",&c);
+	for(a=0;a<1001;a++)
+	{
+		if(yh[a].zh==c)
+		{     
+			break;
+		}
+		else 
+		{
+			printf("此用户不存在:\n");
+			return;
+		}
+	}
+	printf("请输入密码:\n");
+	scanf("%d",&e);
+	do{
+		if(e==yh[a].mima)
+		{
+			printf("用户名为:%s  余额为%ld\n",yh[a].yhname,yh[a].yue);
+			printf("输入取款额度:\n");
+			scanf("%ld",&y);
+			z=yh[a].yue-y;
+			if(z<0)
+			{
+				printf("取款失败余额不足,当前余额为%ld",yh[a].yue);
+			}
+			else
+			{
+				yh[a].yue=z;
+				printf("取款成功,余额为%ld\n",yh[a].yue);
+			}
+			return;
+		}
+		else
+		{ 
+			printf("输入错误,重新输入\n");
+			scanf("%d",&e);
+		}
+	}while(1);
+}
+
+void chaxun()
+{      
+	printf("此功能还未开发\n");
+}
+
+void zhuanzhang()
+{      
+	printf("此功能还未开发\n");
+}
+
+void guashi()
+{      
+	printf("此功能还未开发");
+}
+
+void jiegua()
+{      
+	printf("此功能还未开发");
+}
+
+void xiaohu()
+{      
+	printf("此功能还未开发");
+}
+
+void gaimi()
+{      
+	printf("此功能还未开发");
+}
+
+
+void main()
+{      
+	int a;
+	struct user yh[1000];
+	FILE *p;
+	if((p=fopen("D:\\ATM.txt","a+"))==NULL)
+	{
+		printf("无法打开");
+		exit(0);
+	}
+	fclose(p);
+	p=fopen("D:\\ATM.txt","r");
+	for(a=0;a<1001;a++)
+	{
+		fread(&yh[a],sizeof(struct user),1,p);
+	}
+	fclose(p);
+	do
+	{
+		int i,b;
+		menu(); 
+		printf("请选择相应的菜单项:");
+		scanf("%d",&i);
+		if(i<10||i>0)
+		{  
+			
+			switch(i)
+			{
+			case 1:system("cls");
+				kaihu(yh);           
+				break;
+			case 2:system("cls");
+				cunkuan(yh);
+				break;
+			case 3:system("cls");
+				qukuan(yh);
+				break;
+			case 4:system("cls");
+				chaxun();
+				break; 
+			case 5:system("cls");
+				zhuanzhang();
+				break; 
+			case 6:system("cls");
+				guashi();
+				break; 
+			case 7:system("cls");
+				jiegua();
+				break; 
+			case 8:system("cls");
+				xiaohu();
+				break; 
+			case 9:system("cls");
+				gaimi();
+				break;
+			case 10: return;
+			default:
+				printf("重新输入");
+				break;
+			}    
+		} 
+		FILE *q;
+		q=fopen("D:\\ATM.txt","w");
+		for(b=0;b<100;b++){
+			fwrite(&yh[b],sizeof(struct user),1,q);}
+		fclose(q);
+	}while(1);
+}
